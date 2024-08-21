@@ -1,0 +1,52 @@
+import random
+
+HMpics = [
+    "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
+    "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
+    "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
+    "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
+    "  +---+\n  |   |\n  O   |\n /|\  |\n      |\n      |\n=========",
+    "  +---+\n  |   |\n  O   |\n /|\  |\n /    |\n      |\n=========",
+    "  +---+\n  |   |\n  O   |\n /|\  |\n / \  |\n      |\n========="
+]
+
+def hangmanPicture(numTries):
+    print(HMpics[numTries])
+
+def hangman():
+    wordList = ['code', 'employ', 'seat', 'army', 'berserk', 'arch', 'care', 'drag', 'greedy', 'acidic', 'middle', 'jog', 'encouraging']
+    word = random.choice(wordList).lower()
+    guessingWord = "" * len(word)
+    guessedLetters = []
+    tries = 0
+
+    print("Let's play Hangman!")
+    print(HMpics[tries])
+
+    while tries < 6:
+        print(f"\n Current word: {' '.join(guessingWord)}")
+        guess = input("Guess a letter: ").lower()
+
+        if guess in guessedLetters:
+            print(f"You already guessed that!")
+        elif len(guess) != 1 or not guess.isalpha():
+            print("Invalid input.")
+        elif guess not in word:
+            tries += 1
+            guessedLetters.append(guess)
+            hangmanPicture(tries)
+            print(f"Nope\n Letters guessed: {' '.join(guessedLetters)}")
+        else:
+            guessedLetters.append(guess)
+            guessingWord = ''.join([char if char in guessedLetters else "" for char in word])
+            print(f"{' '.join(guessingWord)}\n Letters guessed: {' '.join(guessedLetters)}")
+
+        if "_" not in guessingWord:
+            print(f"You got it! The word was: {word}")
+            break
+    else:
+        print("He died rip :(")
+        print(f"The word was: {word}")
+
+
+hangman()
